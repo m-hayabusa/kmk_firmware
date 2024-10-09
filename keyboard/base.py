@@ -1,6 +1,8 @@
 from kmk.keys import KC
 from kmk.modules.layers import Layers
 
+import kmk.extensions.keymap_extras.keymap_jp_us
+
 from keyboard.hardware import KMKKeyboard
 from keyboard.status_led import LEDLockStatus
 
@@ -12,14 +14,14 @@ keyboard.extensions.append(LEDLockStatus(keyboard=keyboard))
 _______ = KC.TRANSPARENT
 XXXXXXX = KC.NO
 
-KC.AT = KC.LBRC
-KC.LBRC = KC.RBRC
-KC.COLN = KC.QUOT
-KC.RBRC = KC.NUHS
-KC.ZNHN = KC.TILD
-KC.CIRC = KC.EQUAL
-KC.TILD = KC.RSFT(KC.CIRC)
-KC.PIPE = KC.RSFT(KC.JYEN)
+# KC.AT = KC.LBRC
+# KC.LBRC = KC.RBRC
+# KC.COLN = KC.QUOT
+# KC.RBRC = KC.NUHS
+# KC.ZNHN = KC.TILD
+# KC.CIRC = KC.EQUAL
+# KC.TILD = KC.RSFT(KC.CIRC)
+# KC.PIPE = KC.RSFT(KC.JYEN)
 
 FN_L = KC.MO(1)
 FN_R = KC.MO(2)
@@ -30,7 +32,7 @@ keyboard.keymap = [
     [
         KC.TAB,  KC.Q,    KC.W,    KC.E,    KC.R,   KC.T,    KC.Y,    KC.U,    KC.I,    KC.O,    KC.P,     KC.AT,   KC.LBRC,  KC.BSPC,
         KC.LCTL,  KC.A,    KC.S,    KC.D,    KC.F,    KC.G,    KC.H,    KC.J,    KC.K,    KC.L,    KC.SCLN, KC.COLN, KC.RBRC, KC.ENT,
-        KC.LSFT,    KC.Z,    KC.X,    KC.C,    KC.V,    KC.B,    KC.N,    KC.M,    KC.COMM, KC.DOT,  KC.SLSH, KC.RO,          KC.RSFT,
+        KC.LSFT,    KC.Z,    KC.X,    KC.C,    KC.V,    KC.B,    KC.N,    KC.M,    KC.COMM, KC.DOT,  KC.SLSH, KC.BSLS,        KC.RSFT,
                         KC.LALT, KC.LGUI, FN_L,         KC.SPC,         FN_R,    KC.PSCR, KC.RALT, KC.LEFT, KC.DOWN, KC.UP,   KC.RGHT,
     ],
     [

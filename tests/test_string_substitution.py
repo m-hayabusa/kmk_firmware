@@ -47,21 +47,21 @@ class TestStringSubstitution(unittest.TestCase):
         # that results in a corresponding match, as that key is never sent
         self.keyboard.test(
             'multi-character key, single-character value',
-            [(0, True), (0, False), (0, True), (0, False), self.delay],
+            [(0, True), (0, False), (0, True), (0, False)],
             [{KC.A}, {}, {KC.BACKSPACE}, {}, {KC.B}, {}],
         )
         # note: the pressed key is never sent here, as the event is
         # intercepted and the replacement is sent instead
         self.keyboard.test(
             'multi-character value, single-character key',
-            [(1, True), (1, False), self.delay],
+            [(1, True), (1, False)],
             [{KC.A}, {}, {KC.A}, {}],
         )
         # modifiers are force-released if there's a match,
         # so the keyup event for them isn't sent
         self.keyboard.test(
             'shifted alphanumeric or symbol in key and/or value',
-            [(3, True), (2, True), (2, False), (3, False), self.delay],
+            [(3, True), (2, True), (2, False), (3, False)],
             [{KC.LSHIFT}, {KC.LSHIFT, KC.N2}, {}],
         )
         self.keyboard.test(
@@ -75,7 +75,6 @@ class TestStringSubstitution(unittest.TestCase):
                 (5, False),
                 (5, True),
                 (5, False),
-                self.delay,
             ],
             [
                 {KC.D},
@@ -136,7 +135,6 @@ class TestStringSubstitution(unittest.TestCase):
                 (0, False),
                 (0, True),
                 (0, False),
-                self.delay,
             ],
             [
                 {KC.C},
@@ -158,7 +156,6 @@ class TestStringSubstitution(unittest.TestCase):
                 (0, False),
                 (5, True),
                 (5, False),
-                self.delay,
             ],
             [
                 {KC.A},
@@ -258,7 +255,6 @@ class TestStringSubstitution(unittest.TestCase):
                 # send the unreachable match "cccc" after matching "ccc"
                 (5, True),
                 (5, False),
-                self.delay,
             ],
             [
                 {KC.C},
@@ -415,11 +411,12 @@ class TestStringSubstitution(unittest.TestCase):
             )
         # multi-character phrase
         for i, character in enumerate(combination):
+            key = KC[character]
+            if character.isupper():
+                key = KC.LSHIFT(KC[character])
             self.assertEqual(
                 multi_character_phrase.get_character_at_index(i).key_code.__dict__,
-                KC.LSHIFT(KC[character]).__dict__
-                if combination[i].isupper()
-                else KC[character].__dict__,
+                key.__dict__,
                 f'Test failed when constructing phrase with character {character}',
             )
 
@@ -461,11 +458,12 @@ class TestStringSubstitution(unittest.TestCase):
         '''Test character/phrase construction with every letter, number, and symbol, shifted and unshifted'''
         phrase = Phrase(self.everything)
         for i, character in enumerate(self.everything):
+            key = KC[character]
+            if character.isupper():
+                key = KC.LSHIFT(KC[character])
             self.assertEqual(
                 phrase.get_character_at_index(i).key_code.__dict__,
-                KC.LSHIFT(KC[character]).__dict__
-                if self.everything[i].isupper()
-                else KC[character].__dict__,
+                key.__dict__,
                 f'Test failed when constructing phrase with character {character}',
             )
 

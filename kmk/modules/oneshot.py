@@ -1,24 +1,37 @@
 from kmk.keys import make_argumented_key
-from kmk.modules.holdtap import ActivationType, HoldTap, HoldTapKeyMeta
-from kmk.modules.layers import LayerKeyMeta
+from kmk.modules.holdtap import ActivationType, HoldTap, HoldTapKey
+from kmk.modules.layers import LayerKey
 from kmk.utils import Debug
 
 debug = Debug(__name__)
 
 
-class OneShotKeyMeta(HoldTapKeyMeta):
-    def __init__(self, kc, tap_time=None):
-        super().__init__(tap=kc, hold=kc, prefer_hold=False, tap_time=tap_time)
+class OneShotKey(HoldTapKey):
+    def __init__(self, kc, tap_time=None, **kwargs):
+        super().__init__(
+            tap=kc,
+            hold=kc,
+            prefer_hold=False,
+            tap_interrupted=False,
+            tap_time=tap_time,
+            repeat=0,
+            **kwargs,
+        )
 
 
 class OneShot(HoldTap):
+    '''This module is deprecated; use sticky_keys instead.'''
+
     tap_time = 1000
 
     def __init__(self):
         super().__init__()
+        debug(
+            'Warning: OneShot module is deprecated and will be removed; use sticky_keys instead.'
+        )
         make_argumented_key(
-            validator=OneShotKeyMeta,
             names=('OS', 'ONESHOT'),
+            constructor=OneShotKey,
             on_press=self.osk_pressed,
             on_release=self.osk_released,
         )
@@ -32,14 +45,14 @@ class OneShot(HoldTap):
             if key == current_key:
                 continue
 
-            if (isinstance(current_key.meta, OneShotKeyMeta)) or (
-                isinstance(current_key.meta, LayerKeyMeta)
+            if (isinstance(current_key, OneShotKey)) or (
+                isinstance(current_key, LayerKey)
             ):
                 keyboard.cancel_timeout(state.timeout_key)
-                if key.meta.tap_time is None:
+                if key.tap_time is None:
                     tap_time = self.tap_time
                 else:
-                    tap_time = key.meta.tap_time
+                    tap_time = key.tap_time
                 state.timeout_key = keyboard.set_timeout(
                     tap_time,
                     lambda k=key: self.on_tap_time_expired(k, keyboard),

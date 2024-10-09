@@ -14,7 +14,7 @@ keyboard.extensions.append(MediaKeys())
 
 rgb = RGB(
     pixel_pin=keyboard.rgb_pixel_pin,
-    num_pixels=4
+    num_pixels=4,
 )
 keyboard.extensions.append(rgb)
 keyboard.modules.append(CapsWord())
@@ -41,6 +41,7 @@ RGB_M_BR = KC.RGB_MODE_BREATHE_RAINBOW
 RGB_M_K = KC.RGB_MODE_KNIGHT
 RGB_M_S = KC.RGB_MODE_SWIRL
 
+# fmt:off
 keyboard.keymap = [
     [   #QWERTY
         KC.GRV,  KC.Q,    KC.W,    KC.E, KC.R,    KC.T,                  KC.Y, KC.U, KC.I,    KC.O,    KC.P,    KC.BSPC,
@@ -61,7 +62,7 @@ keyboard.keymap = [
         KC.TRNS, KC.TRNS, KC.TRNS, KC.TRNS, KC.TRNS,                                  KC.TRNS, KC.TRNS, KC.TRNS, KC.TRNS, KC.QUOT,
     ],
     [
-        KC.HOME, KC.EXLM, KC.AT,   KC.HASH, KC.DLR , KC.PERC,                     KC.CIRC, KC.AMPR, KC.ASTR, KC.LPRN, KC.RPRN, KC.DEL,
+        KC.HOME, KC.EXLM, KC.AT,   KC.HASH, KC.DLR,  KC.PERC,                     KC.CIRC, KC.AMPR, KC.ASTR, KC.LPRN, KC.RPRN, KC.DEL,
         KC.END,  KC.LGUI, KC.LALT, KC.LCTL, KC.LSFT, KC.INS,                      KC.LBRC, KC.RBRC, KC.MINS, KC.EQL,  KC.BSLS, KC.TRNS,
         KC.TRNS, KC.NO,   KC.VOLD, KC.MUTE, KC.VOLU, KC.MPLY, OS_RALT,    KC.APP, KC.LCBR, KC.RCBR, KC.UNDS, KC.PLUS, KC.PIPE, KC.TRNS,
         KC.TRNS, KC.TRNS, KC.TRNS, KC.TRNS, KC.TRNS,                                       LYR5,    KC.TRNS, KC.TRNS, KC.TRNS, KC.RCTL,
@@ -79,6 +80,7 @@ keyboard.keymap = [
         KC.NO, RGB_M_BR, RGB_M_R,  KC.TRNS,  KC.NO,                                              KC.TRNS,    RGB_M_K,    RGB_M_K,    KC.NO,      KC.NO,
     ]
 ]
+# fmt:off
 
 if __name__ == '__main__':
     keyboard.go()

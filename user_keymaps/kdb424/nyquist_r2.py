@@ -1,6 +1,9 @@
+import board
+
 from kb import KMKKeyboard
 
 from kmk.extensions.rgb import RGB
+from kmk.handlers.sequences import send_string, simple_key_sequence
 from kmk.keys import KC
 from kmk.modules.holdtap import HoldTap
 from kmk.modules.layers import Layers
@@ -13,14 +16,7 @@ keyboard.tap_time = 150
 
 layers = Layers()
 holdtap = HoldTap()
-rgb = RGB(
-    pixel_pin=keyboard.rgb_pixel_pin,
-    num_pixels=27,
-    val_limit=100,
-    hue_default=190,
-    sat_default=100,
-    val_default=5,
-)
+rgb = RGB(pixel_pin=keyboard.rgb_pixel_pin, num_pixels=27, val_limit=100, hue_default=190, sat_default=100, val_default=5)
 split = Split()
 
 keyboard.modules = [holdtap, layers, split]
@@ -38,7 +34,7 @@ TAB_SB = KC.LT(5, KC.TAB)
 SUPER_L = KC.LM(4, KC.LGUI)
 
 # ---------------------- Keymap ---------------------------------------------------------
-# fmt:off
+
 keyboard.keymap = [
     [
         # df
@@ -90,7 +86,6 @@ keyboard.keymap = [
         _______, _______,    _______, KC.RGB_TOG,    _______,     _______,    _______, _______, _______, _______, _______, _______
     ],
 ]
-# fmt:on
 
 if __name__ == '__main__':
     keyboard.go()

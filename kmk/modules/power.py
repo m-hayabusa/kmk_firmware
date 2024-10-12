@@ -4,6 +4,7 @@ from supervisor import ticks_ms
 
 from time import sleep
 
+from kmk.handlers.stock import passthrough as handler_passthrough
 from kmk.keys import make_key
 from kmk.kmktime import check_deadline
 from kmk.modules import Module
@@ -20,9 +21,15 @@ class Power(Module):
         self._i2c_deinit_count = 0
         self._loopcounter = 0
 
-        make_key(names=('PS_TOG',), on_press=self._ps_tog)
-        make_key(names=('PS_ON',), on_press=self._ps_enable)
-        make_key(names=('PS_OFF',), on_press=self._ps_disable)
+        make_key(
+            names=('PS_TOG',), on_press=self._ps_tog, on_release=handler_passthrough
+        )
+        make_key(
+            names=('PS_ON',), on_press=self._ps_enable, on_release=handler_passthrough
+        )
+        make_key(
+            names=('PS_OFF',), on_press=self._ps_disable, on_release=handler_passthrough
+        )
 
     def __repr__(self):
         return f'Power({self._to_dict()})'

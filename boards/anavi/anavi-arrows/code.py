@@ -2,15 +2,23 @@ import board
 
 from arrows import AnaviArrows
 
-from kmk.extensions.display import Display, TextEntry
-from kmk.extensions.display.ssd1306 import SSD1306
 from kmk.extensions.LED import LED
 from kmk.extensions.media_keys import MediaKeys
+from kmk.extensions.peg_oled_Display import (
+    Oled,
+    OledData,
+    OledDisplayMode,
+    OledReactionType,
+)
 from kmk.extensions.RGB import RGB, AnimationModes
 from kmk.keys import KC
 from kmk.modules.encoder import EncoderHandler
 
 keyboard = AnaviArrows()
+
+# I2C pins for the mini OLED display
+keyboard.SCL = board.D5
+keyboard.SDA = board.D4
 
 # fmt: off
 keyboard.keymap = [
@@ -20,14 +28,19 @@ keyboard.keymap = [
 ]
 # fmt: on
 
-display = Display(
-    display=SSD1306(sda=board.D4, scl=board.D5),
-    entries=[
-        TextEntry(text='ANAVI Arrows'),
-    ],
-    height=64,
+oled = Oled(
+    OledData(
+        corner_one={0: OledReactionType.STATIC, 1: ['ANAVI Arrows']},
+        corner_two={0: OledReactionType.STATIC, 1: [' ']},
+        corner_three={0: OledReactionType.STATIC, 1: ['Open Source']},
+        corner_four={0: OledReactionType.STATIC, 1: [' ']},
+    ),
+    oWidth=128,
+    oHeight=64,
+    toDisplay=OledDisplayMode.TXT,
+    flip=False,
 )
-keyboard.extensions.append(display)
+keyboard.extensions.append(oled)
 
 led = LED(
     led_pin=[

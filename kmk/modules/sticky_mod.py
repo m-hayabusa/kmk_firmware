@@ -1,11 +1,10 @@
-from kmk.keys import Key, make_argumented_key
+from kmk.keys import make_argumented_key
 from kmk.modules import Module
 
 
-class StickyModKey(Key):
-    def __init__(self, key, mod, **kwargs):
-        super().__init__(**kwargs)
-        self.key = key
+class StickyModMeta:
+    def __init__(self, kc, mod):
+        self.kc = kc
         self.mod = mod
 
 
@@ -15,7 +14,7 @@ class StickyMod(Module):
         self._active_key = None
         make_argumented_key(
             names=('SM',),
-            constructor=StickyModKey,
+            validator=StickyModMeta,
             on_press=self.sm_pressed,
             on_release=self.sm_released,
         )
@@ -49,16 +48,16 @@ class StickyMod(Module):
         return
 
     def release_key(self, keyboard, key):
-        keyboard.process_key(key.mod, False)
+        keyboard.process_key(key.meta.mod, False)
         self._active = False
         self._active_key = None
 
     def sm_pressed(self, key, keyboard, *args, **kwargs):
-        keyboard.process_key(key.mod, True)
-        keyboard.process_key(key.key, True)
+        keyboard.process_key(key.meta.mod, True)
+        keyboard.process_key(key.meta.kc, True)
         self._active_key = key
 
     def sm_released(self, key, keyboard, *args, **kwargs):
-        keyboard.process_key(key.key, False)
+        keyboard.process_key(key.meta.kc, False)
         self._active_key = key
         self._active = True

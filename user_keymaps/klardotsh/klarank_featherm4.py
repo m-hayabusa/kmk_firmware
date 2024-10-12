@@ -14,40 +14,37 @@ keyboard.debug_enabled = False
 keyboard.unicode_mode = UnicodeMode.LINUX
 keyboard.tap_time = 750
 
-emoticons = cuss(
-    {
-        # Emojis
-        'BEER': r'🍺',
-        'BEER_TOAST': r'🍻',
-        'FACE_CUTE_SMILE': r'😊',
-        'FACE_HEART_EYES': r'😍',
-        'FACE_JOY': r'😂',
-        'FACE_SWEAT_SMILE': r'😅',
-        'FACE_THINKING': r'🤔',
-        'FIRE': r'🔥',
-        'FLAG_CA': r'🇨🇦',
-        'FLAG_US': r'🇺🇸',
-        'HAND_CLAP': r'👏',
-        'HAND_HORNS': r'🤘',
-        'HAND_OK': r'👌',
-        'HAND_THUMB_DOWN': r'👎',
-        'HAND_THUMB_UP': r'👍',
-        'HAND_WAVE': r'👋',
-        'HEART': r'❤️',
-        'MAPLE_LEAF': r'🍁',
-        'POOP': r'💩',
-        'TADA': r'🎉',
-        # Emoticons, but fancier
-        'ANGRY_TABLE_FLIP': r'(ノಠ痊ಠ)ノ彡┻━┻',
-        'CELEBRATORY_GLITTER': r'+｡:.ﾟヽ(´∀｡)ﾉﾟ.:｡+ﾟﾟ+｡:.ﾟヽ(*´∀)ﾉﾟ.:｡+ﾟ',
-        'SHRUGGIE': r'¯\_(ツ)_/¯',
-        'TABLE_FLIP': r'(╯°□°）╯︵ ┻━┻',
-    }
-)
+emoticons = cuss({
+    # Emojis
+    'BEER': r'🍺',
+    'BEER_TOAST': r'🍻',
+    'FACE_CUTE_SMILE': r'😊',
+    'FACE_HEART_EYES': r'😍',
+    'FACE_JOY': r'😂',
+    'FACE_SWEAT_SMILE': r'😅',
+    'FACE_THINKING': r'🤔',
+    'FIRE': r'🔥',
+    'FLAG_CA': r'🇨🇦',
+    'FLAG_US': r'🇺🇸',
+    'HAND_CLAP': r'👏',
+    'HAND_HORNS': r'🤘',
+    'HAND_OK': r'👌',
+    'HAND_THUMB_DOWN': r'👎',
+    'HAND_THUMB_UP': r'👍',
+    'HAND_WAVE': r'👋',
+    'HEART': r'❤️',
+    'MAPLE_LEAF': r'🍁',
+    'POOP': r'💩',
+    'TADA': r'🎉',
 
-WPM = send_string(
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum arcu vitae elementum curabitur vitae nunc sed. Facilisis sed odio morbi quis.'
-)
+    # Emoticons, but fancier
+    'ANGRY_TABLE_FLIP': r'(ノಠ痊ಠ)ノ彡┻━┻',
+    'CELEBRATORY_GLITTER': r'+｡:.ﾟヽ(´∀｡)ﾉﾟ.:｡+ﾟﾟ+｡:.ﾟヽ(*´∀)ﾉﾟ.:｡+ﾟ',
+    'SHRUGGIE': r'¯\_(ツ)_/¯',
+    'TABLE_FLIP': r'(╯°□°）╯︵ ┻━┻',
+})
+
+WPM = send_string('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Bibendum arcu vitae elementum curabitur vitae nunc sed. Facilisis sed odio morbi quis.')
 
 _______ = KC.TRNS
 xxxxxxx = KC.NO
@@ -91,7 +88,7 @@ KC.LALT.before_press_handler(shrek_is_life)
 # But also give me a normal alt if I want it. Shrek isn't ALWAYS life.
 BORING_ALT = KC.LALT.clone()
 
-# fmt:off
+
 keyboard.keymap = [
     [
         KC.GESC, KC.QUOT, KC.COMM,            KC.DOT,   KC.P,     KC.Y,    KC.F,    KC.G,     KC.C,    KC.R,    KC.L,  KC.BSPC,
@@ -121,7 +118,6 @@ keyboard.keymap = [
         KC.LCTL, KC.DBG,  HELLA_TD, xxxxxxx, _______, _______, xxxxxxx, xxxxxxx, KC.MUTE, KC.VOLD, KC.VOLU, xxxxxxx,
     ],
 ]
-# fmt:on
 
 if __name__ == '__main__':
     keyboard.go()

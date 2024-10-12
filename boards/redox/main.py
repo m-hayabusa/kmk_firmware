@@ -27,7 +27,6 @@ LT_END = KC.LT(3, KC.END)
 LA_PAST = KC.HT(KC.PAST, KC.LALT)
 LC_BSLS = KC.HT(KC.BSLS, KC.LCTL)
 
-# fmt:off
 keyboard.keymap = [
     [   # QWERTY
         LT_GRV,  KC.N1,   KC.N2,   KC.N3,   KC.N4, KC.N5,                                       KC.N6, KC.N7, KC.N8,   KC.N9,   KC.N0,   LT_MINS,
@@ -59,7 +58,6 @@ keyboard.keymap = [
         KC.NO, KC.NO,    KC.NO, KC.NO,     KC.NO,    KC.NO,   KC.NO,    KC.NO, KC.NO,       KC.NO,    KC.NO, KC.NO, KC.NO,  KC.NO,
     ]
 ]
-# fmt:on
 
 if __name__ == '__main__':
     keyboard.go()

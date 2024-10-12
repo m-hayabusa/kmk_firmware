@@ -14,7 +14,7 @@ keyboard.extensions.append(MediaKeys())
 
 rgb = RGB(
     pixel_pin=keyboard.rgb_pixel_pin,
-    num_pixels=4,
+    num_pixels=4
 )
 keyboard.extensions.append(rgb)
 keyboard.modules.append(CapsWord())
@@ -41,7 +41,6 @@ RGB_M_BR = KC.RGB_MODE_BREATHE_RAINBOW
 RGB_M_K = KC.RGB_MODE_KNIGHT
 RGB_M_S = KC.RGB_MODE_SWIRL
 
-# fmt:off
 keyboard.keymap = [
     [   #QWERTY
         KC.GRV,  KC.Q,    KC.W,    KC.E,    KC.R, KC.T,                  KC.Y, KC.U, KC.I,    KC.O,    KC.P,    KC.BSPC,
@@ -64,11 +63,11 @@ keyboard.keymap = [
     [
         COPY,    KC.N1,   KC.N2,   KC.N3,   KC.N4,   KC.N5,               KC.N6,   KC.N7,   KC.N8,   KC.N9,   KC.N0,   KC.TRNS,
         CUT,     KC.LGUI, KC.LALT, KC.LCTL, KC.LSFT, PSTE,                KC.PGUP, KC.LEFT, KC.UP,   KC.DOWN, KC.RGHT, KC.PGDN,
-        KC.TRNS, KC.F1,   KC.F2,   KC.F3,   KC.F4,   KC.F5, UNDO,   REDO, KC.F6,   KC.F7,   KC.F8,   KC.F9,   KC.F10,  KC.RCTL,
+        KC.TRNS, KC.F1,   KC.F2,   KC.F3,   KC.F4  , KC.F5, UNDO,   REDO, KC.F6,   KC.F7,   KC.F8,   KC.F9,   KC.F10,  KC.RCTL,
                  KC.TRNS, KC.TRNS, KC.TRNS, KC.TRNS,                               LYR5,    KC.TRNS, KC.TRNS, KC.TRNS,
     ],
     [
-        KC.HOME, KC.EXLM, KC.AT,   KC.HASH, KC.DLR,  KC.PERC,                     KC.CIRC, KC.AMPR, KC.ASTR, KC.LPRN, KC.RPRN, KC.DEL,
+        KC.HOME, KC.EXLM, KC.AT,   KC.HASH, KC.DLR , KC.PERC,                     KC.CIRC, KC.AMPR, KC.ASTR, KC.LPRN, KC.RPRN, KC.DEL,
         KC.END,  KC.LGUI, KC.LALT, KC.LCTL, KC.LSFT, KC.INS,                      KC.LBRC, KC.RBRC, KC.MINS, KC.EQL,  KC.BSLS, KC.TRNS,
         KC.TRNS, KC.PIPE, KC.UNDS, KC.PLUS, KC.LCBR, KC.RCBR, OS_RALT,    KC.APP, KC.MUTE, KC.VOLD, KC.VOLU, KC.MPLY, KC.NO,   KC.RCTL,
         KC.TRNS, KC.TRNS, KC.TRNS, KC.TRNS, LYR5,                                          KC.TRNS, KC.TRNS, KC.TRNS, KC.TRNS,
@@ -80,7 +79,6 @@ keyboard.keymap = [
                KC.NO,    RGB_M_BR, RGB_M_R,  KC.TRNS,                                            KC.TRNS,    RGB_M_K,    RGB_M_K,    KC.NO,
     ]
 ]
-# fmt:off
 
 if __name__ == '__main__':
     keyboard.go()

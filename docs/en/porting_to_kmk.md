@@ -58,10 +58,8 @@ send its corresponding number. Use it after your pins and module definition
 to define both `keyboard.coord_mapping` and `keyboard.keymap`.
 
 ```python
-from kmk.modules.macros import Macros
+from kmk.handlers.sequences import simple_key_sequence
 from kmk.keys import KC
-
-keyboard.modules.append(Macros())
 
 # *2 for split keyboards, which will typically manage twice the number of keys
 # of one side. Having this N too large will have no impact (maybe slower boot..)
@@ -75,11 +73,13 @@ for i in range(N):
     c, r = divmod(i, 100)
     d, u = divmod(r, 10)
     layer.append(
-        KC.MACRO(
-            getattr(KC, 'N' + str(c)),
-            getattr(KC, 'N' + str(d)),
-            getattr(KC, 'N' + str(u)),
-            KC.SPC,
+        simple_key_sequence(
+            (
+                getattr(KC, 'N' + str(c)),
+                getattr(KC, 'N' + str(d)),
+                getattr(KC, 'N' + str(u)),
+                KC.SPC,
+            )
         )
     )
 keyboard.keymap = [layer]

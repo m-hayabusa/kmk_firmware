@@ -11,7 +11,6 @@ import usb_hid
 def bootcfg(
     sense: [microcontroller.Pin, digitalio.DigitalInOut],
     source: Optional[microcontroller.Pin, digitalio.DigitalInOut] = None,
-    autoreload: bool = True,
     boot_device: int = 0,
     cdc_console: bool = True,
     cdc_data: bool = False,
@@ -39,10 +38,9 @@ def bootcfg(
         source.direction = digitalio.Direction.OUTPUT
         source.value = False
 
-    if not autoreload:
-        import supervisor
-
-        supervisor.runtime.autoreload = False
+    # sense pulled low -> skip boot configuration
+    if not sense.value:
+        return False
 
     # configure HID devices
     devices = []
@@ -85,11 +83,6 @@ def bootcfg(
         import usb_cdc
 
         usb_cdc.enable(data=True)
-
-    # sense pulled low -> Skip boot configuration that may disable debug or
-    # rescue facilities.
-    if not sense.value:
-        return False
 
     # Entries for serial console (REPL) and storage are intentionally evaluated
     # last to ensure the board is debuggable, mountable and rescueable, in case

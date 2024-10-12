@@ -1,5 +1,4 @@
 '''Enables splitting keyboards wirelessly or wired'''
-
 import busio
 from micropython import const
 from supervisor import runtime, ticks_ms
@@ -140,7 +139,7 @@ class Split(Module):
                     )
 
         # Attempt to sanely guess a coord_mapping if one is not provided.
-        if not keyboard.coord_mapping and keyboard.row_pins and keyboard.col_pins:
+        if not keyboard.coord_mapping:
             cm = []
 
             rows_to_calc = len(keyboard.row_pins)
@@ -158,8 +157,6 @@ class Split(Module):
                     cm.append(cols_to_calc * (rows_to_calc + ridx) + cidx)
 
             keyboard.coord_mapping = tuple(cm)
-        else:
-            print('Error: please provide coord_mapping for custom scanner')
 
         if self.split_side == SplitSide.RIGHT:
             offset = self.split_offset

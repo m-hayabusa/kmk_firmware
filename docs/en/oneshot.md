@@ -1,12 +1,8 @@
 # OneShot Keycodes
 
-> [!WARNING]
-> OneShot Keys have been deprecated in favor of [Sticky Keys](sticky_keys.md)
-> and will be removed at a future date.
-
-OneShot keys enable you to have keys that keep staying pressed
+OneShot keys or sticky keys enable you to have keys that keep staying pressed
 for a certain time or until another key is pressed and released.
-If the timeout expires or other keys are pressed, and the OneShot key wasn't
+If the timeout expires or other keys are pressed, and the sticky key wasn't
 released, it is handled as a regular key hold.
 
 ## Enable OneShot Keys
@@ -21,9 +17,9 @@ keyboard.modules.append(oneshot)
 
 ## Keycodes
 
-|Keycode          | Aliases      |Description                        |
-|-----------------|--------------|-----------------------------------|
-|`KC.OS(KC.ANY)`  | `KC.ONESHOT` |make a oneshot version of `KC.ANY` |
+|Keycode          | Aliases      |Description                       |
+|-----------------|--------------|----------------------------------|
+|`KC.OS(KC.ANY)`  | `KC.ONESHOT` |make a sticky version of `KC.ANY` |
 
 `KC.ONESHOT` accepts any valid key code as argument, including modifiers and KMK
 internal keys like momentary layer shifts.
@@ -34,7 +30,7 @@ The full OneShot signature is as follows:
 
 ```python
 KC.OS(
-    KC.TAP, # the oneshot keycode
+    KC.TAP, # the sticky keycode
     tap_time=None # length of the tap timeout in milliseconds
     )
 ```

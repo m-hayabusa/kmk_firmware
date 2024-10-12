@@ -17,8 +17,7 @@ DOCKER_TAG ?= latest
 AMPY_PORT ?= /dev/ttyUSB0
 AMPY_BAUD ?= 115200
 AMPY_DELAY ?= 1.5
-VENV ?= .venv
-PYTHON = $(VENV)/bin/python
+PIPENV ?= $(shell which pipenv 2>/dev/null)
 
 MPY_CROSS ?= $(shell which mpy-cross 2>/dev/null)
 MPY_FLAGS ?= '-O2'
@@ -45,13 +44,12 @@ $(MPY_TARGET_DIR)/%.mpy: %.py
 	@$(MPY_CROSS) $(MPY_FLAGS) $? -o $@
 endif
 
-$(VENV):
-	@echo "===> Installing virtual environment"
-	python -m venv $(VENV)
-	$(PYTHON) -m pip install --upgrade pip
-	$(PYTHON) -m pip install .[dev]
+.devdeps: Pipfile.lock
+	@echo "===> Installing dependencies with pipenv"
+	@$(PIPENV) sync --dev
+	@touch .devdeps
 
-devdeps: $(VENV)
+devdeps: .devdeps
 
 dist: clean-dist dockerbase
 	@mkdir -p .dist
@@ -64,22 +62,20 @@ dockerbase:
 		--build-arg KMKPY_REF=$$(cut -f2 < kmkpython_ref.tsv)
 
 lint: devdeps
-	@$(PYTHON) -m flake8
+	@$(PIPENV) run flake8
 
 spellcheck:
 	./util/spellcheck.sh --no-interactive
 
 fix-formatting: devdeps
-	@$(PYTHON) -m black .
+	@$(PIPENV) run black .
 
 fix-isort: devdeps
-	@$(PYTHON) -m isort .
+	@find boards/ kmk/ tests/ user_keymaps/ -name "*.py" | xargs $(PIPENV) run isort
 
 clean: clean-dist
 	@echo "===> Cleaning build artifacts"
-	rm -rf .venv build dist $(MPY_TARGET_DIR)
-	find . -type f -name '*.pyc' -delete
-	find . -type d -name '__pycache__' -delete
+	@rm -rf .devdeps build dist $(MPY_TARGET_DIR)
 
 clean-dist:
 	@echo "===> Cleaning KMKPython dists"
@@ -92,16 +88,17 @@ clean-dist:
 powerwash: clean
 	@echo "===> Removing vendor/ to force a re-pull"
 	@rm -rf vendor
+	@echo "===> Removing pipenv-managed virtual environment"
+	@$(PIPENV) --rm || true
 
 test: lint unit-tests
 
-TESTS ?= tests
 .PHONY: unit-tests
 unit-tests: devdeps
 ifdef TESTS
-	$(PYTHON) -m unittest $(TESTS)
+	@$(PIPENV) run python3 -m unittest $(TESTS)
 else
-	$(PYTHON) -m unittest discover -t . -s tests
+	@$(PIPENV) run python3 -m unittest discover -t . -s tests
 endif # TESTS
 
 reset-bootloader:
@@ -131,7 +128,7 @@ copy-bootpy:
 
 copy-compiled:
 	@echo "===> Copying compiled KMK folder"
-	@rsync -rhu -delete $(MPY_TARGET_DIR)/* $(MOUNTPOINT)/
+	@rsync -rhu $(MPY_TARGET_DIR)/* $(MOUNTPOINT)/
 	@sync
 
 ifdef USER_KEYMAP

@@ -5,30 +5,29 @@ on:
     paths:
       - 'kmk/**'
 env:
-  mpy-cross-path: "https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/linux-amd64/mpy-cross-linux-amd64-"
+  mpy-cross-path: "https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/"
+  mpy-cross-name: "mpy-cross.static-amd64-linux-"
+  mpy-cross-8-release: "8.0.5"
 jobs:
   Compile:
-    strategy:
-      matrix:
-        mpy-cross-release: ["8.2.0", "9.0.4"]
     runs-on: ubuntu-latest
     steps:
       - run: echo "A ${{ github.event_name }} event trigged build of branch ${{ github.ref }}, repository ${{ github.repository }}"
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Cache mpy-cross
         id: cache-mpy-cross
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         env:
           cache-name: cache-mpy-cross-8
         with:
           path: ${{ github.workspace }}/mpy-cross
-          key: ${{ matrix.mpy-cross-release }}
+          key: ${{ env.mpy-cross-name }}${{ env.mpy-cross-8-release }}
       - if: ${{ steps.cache-mpy-cross.outputs.cache-hit != 'true' }}
         name: install mpy-cross
         run: |
-          wget --no-verbose "${{ env.mpy-cross-path }}${{ matrix.mpy-cross-release }}.static" -O ${{ github.workspace }}/mpy-cross; \
+          wget --no-verbose "${{ env.mpy-cross-path }}${{ env.mpy-cross-name }}${{ env.mpy-cross-8-release }}" -O ${{ github.workspace }}/mpy-cross; \
           chmod +x ${{ github.workspace }}/mpy-cross
 
       - name: get short git sha
@@ -41,7 +40,7 @@ jobs:
         run: |
           ls -la .compiled/kmk/
       - name: upload zip
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
-          name: kmk-${{ steps.sha.outputs.SHA }}+mpy-cross-${{ matrix.mpy-cross-release }}
+          name: kmk-${{ steps.sha.outputs.SHA }}+mpy-cross-${{ env.mpy-cross-8-release }}
           path: .compiled/kmk/

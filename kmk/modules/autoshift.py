@@ -1,4 +1,4 @@
-from kmk.keys import KC, KeyboardKey
+from kmk.keys import KC, Key
 from kmk.modules import Module
 from kmk.scheduler import cancel_task, create_task
 from kmk.utils import Debug
@@ -41,7 +41,8 @@ class Autoshift(Module):
         if (
             is_pressed
             and not self._key
-            and isinstance(key, KeyboardKey)
+            and isinstance(key, Key)
+            and key.code
             and KC.A.code <= key.code <= KC.Z.code
         ):
             create_task(self._task, after_ms=self.tap_time)

@@ -5,6 +5,21 @@ def passthrough(key, keyboard, *args, **kwargs):
     return keyboard
 
 
+def default_pressed(key, keyboard, KC, coord_int=None, *args, **kwargs):
+    keyboard.hid_pending = True
+
+    keyboard.keys_pressed.add(key)
+
+    return keyboard
+
+
+def default_released(key, keyboard, KC, coord_int=None, *args, **kwargs):  # NOQA
+    keyboard.hid_pending = True
+    keyboard.keys_pressed.discard(key)
+
+    return keyboard
+
+
 def reset(*args, **kwargs):
     import microcontroller
 
@@ -128,5 +143,4 @@ def any_pressed(key, keyboard, *args, **kwargs):
     from random import randint
 
     key.code = randint(4, 56)
-    keyboard.keys_pressed.add(key)
-    keyboard.hid_pending = True
+    default_pressed(key, keyboard, *args, **kwargs)

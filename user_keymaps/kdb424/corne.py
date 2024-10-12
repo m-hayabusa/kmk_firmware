@@ -1,3 +1,6 @@
+# OLED
+import board
+
 # import adafruit_displayio_ssd1306
 # import displayio
 # import terminalio
@@ -28,7 +31,6 @@ LT2_SP = KC.LT(3, KC.SPC)
 TAB_SB = KC.LT(5, KC.TAB)
 SUPER_L = KC.LM(4, KC.LGUI)
 
-# fmt:off
 keyboard.keymap = [
     # DVORAK
     # ,-----------------------------------------.                    ,-----------------------------------------.
@@ -149,7 +151,6 @@ keyboard.keymap = [
     ]
 
 ]
-# fmt:on
 
 if __name__ == '__main__':
     keyboard.go(hid_type=HIDModes.USB)

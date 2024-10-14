@@ -1,7 +1,7 @@
 from kmk.keys import KC
 from kmk.modules.layers import Layers
 
-import kmk.extensions.keymap_extras.keymap_jp_us
+# import kmk.extensions.keymap_extras.keymap_jp_us
 
 from keyboard.hardware import KMKKeyboard
 from keyboard.status_led import LEDLockStatus
@@ -14,14 +14,14 @@ keyboard.extensions.append(LEDLockStatus(keyboard=keyboard))
 _______ = KC.TRANSPARENT
 XXXXXXX = KC.NO
 
-# KC.AT = KC.LBRC
-# KC.LBRC = KC.RBRC
-# KC.COLN = KC.QUOT
-# KC.RBRC = KC.NUHS
-# KC.ZNHN = KC.TILD
-# KC.CIRC = KC.EQUAL
-# KC.TILD = KC.RSFT(KC.CIRC)
-# KC.PIPE = KC.RSFT(KC.JYEN)
+KC.AT = KC.LBRC
+KC.LBRC = KC.RBRC
+KC.COLN = KC.QUOT
+KC.RBRC = KC.NUHS
+KC.ZNHN = KC.TILD
+KC.CIRC = KC.EQUAL
+KC.TILD = KC.RSFT(KC.CIRC)
+KC.PIPE = KC.RSFT(KC.JYEN)
 
 FN_L = KC.MO(1)
 FN_R = KC.MO(2)

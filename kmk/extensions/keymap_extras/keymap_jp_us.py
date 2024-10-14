@@ -4,7 +4,7 @@ except ImportError:
     pass
 
 from keyboard.hardware import KMKKeyboard
-from kmk.keys import KC, Key, KeyboardKey, ModifierKey
+from kmk.keys import KC, Key, ModifierKey
 
 shifted = set()
 
@@ -25,7 +25,7 @@ class ShiftKey(ModifierKey):
         keyboard.keys_pressed.discard(self)
         shifted.discard(self)
 
-class ShiftedKey(KeyboardKey):
+class ShiftedKey(Key):
     def __init__(
         self,
         keyOnBase: Key,
